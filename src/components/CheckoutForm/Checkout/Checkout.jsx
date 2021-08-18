@@ -1,92 +1,153 @@
-import React, { useState, useEffect } from 'react'
-import { Paper, Stepper, Step,  StepLabel, Typography, CircularProgress, Divider, Button, CssBaseline } from '@material-ui/core'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import {
+    CssBaseline,
+    Paper,
+    Stepper,
+    Step,
+    StepLabel,
+    Typography,
+    CircularProgress,
+    Divider,
+    Button,
+} from "@material-ui/core";
+import { Link, useHistory } from "react-router-dom";
 
-import { commerce } from '../../../lib/commerce'
-import useStyles from './styles'
-import AdressForm from '../AdressForm'
-import PaymentForm from '../PaymentForm'
+import { commerce } from "../../../lib/commerce";
+import AddressForm from "../AddressForm";
+import PaymentForm from "../PaymentForm";
+import useStyles from "./styles";
 
-const steps = ['Shipping adress', 'Payment details']
+const steps = ["Endereço de Entrega", "Detalhes de Pagamento"];
 
-const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
-    const [activeStep, setActiveStep] = useState(0)
-    const [checkoutToken, setCheckoutToken] = useState(null)
-    const [shippingData, setShippingData] = useState({})
-    const classes = useStyles()
+const Checkout = ({ cart, onCaptureCheckout, order, error }) => {
+    const [checkoutToken, setCheckoutToken] = useState(null);
+    const [activeStep, setActiveStep] = useState(0);
+    const [shippingData, setShippingData] = useState({});
+    const classes = useStyles();
+    const history = useHistory();
+
+    const nextStep = () =>
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    const backStep = () =>
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
 
     useEffect(() => {
-        const generateToken = async () => {
-            try {
-                const token = await commerce.checkout.generateToken(cart.id, { type: 'cart'})
-                
-                setCheckoutToken(token)
-            } catch (error) {
-                console.log(error)
-            }
+        if (cart.id) {
+            const generateToken = async () => {
+                try {
+                    const token = await commerce.checkout.generateToken(
+                        cart.id,
+                        { type: "cart" }
+                    );
+
+                    setCheckoutToken(token);
+                } catch {
+                    if (activeStep !== steps.length) history.push("/");
+                }
+            };
+
+            generateToken();
         }
+    }, [cart]);
 
-        generateToken()
-    }, [cart])
+    const test = (data) => {
+        setShippingData(data);
 
-    const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1 )
-    const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1 )
+        nextStep();
+    };
 
-    const next = (data) => {
-        setShippingData(data)
+    let Confirmation = () =>
+        order.customer ? (
+            <>
+                <div>
+                    <Typography variant="h5">
+                        Obrigado por comprar conosco, {order.customer.firstname}{" "}
+                        {order.customer.lastname}!
+                    </Typography>
+                    <Divider className={classes.divider} />
+                    <Typography variant="subtitle2">
+                        Order ref: {order.customer_reference}
+                    </Typography>
+                </div>
+                <br />
+                <Button
+                    component={Link}
+                    variant="outlined"
+                    type="button"
+                    to="/"
+                >
+                    Voltar para o inicio
+                </Button>
+            </>
+        ) : (
+            <div className={classes.spinner}>
+                <CircularProgress />
+            </div>
+        );
 
-        nextStep()
-    }
-
-    let Confirmation = () => (order.customer ? (
-        <>
-        <div>
-            <Typography variant="h5">Thank you for your purchase, {order.customer.firstname} {order.customer.lastname}!</Typography>
-            <Divider className={classes.divider} />
-            <Typography variant="subtitle2">Order ref: {order.customer_reference}</Typography>
-        </div>
-        <br />
-        <Button component={Link} variant="outlined" type="button" to="/">Back to home</Button>
-        </>
-    ) : (
-        <div className={classes.spinner}>
-        <CircularProgress />
-        </div>
-    ));
-    
     if (error) {
         Confirmation = () => (
-        <>
-            <Typography variant="h5">Error: {error}</Typography>
-            <br />
-            <Button component={Link} variant="outlined" type="button" to="/">Back to home</Button>
-        </>
+            <>
+                <Typography variant="h5">Error: {error}</Typography>
+                <br />
+                <Button
+                    component={Link}
+                    variant="outlined"
+                    type="button"
+                    to="/"
+                >
+                    Voltar para o inicio
+                </Button>
+            </>
         );
     }
 
-    const Form = () => activeStep === 0
-    ? <AdressForm checkoutToken={checkoutToken} next={next} />
-    : <PaymentForm shippingData={shippingData} checkoutToken={checkoutToken} nextStep={nextStep} backStep={backStep} onCaptureCheckout={onCaptureCheckout} />
+    const Form = () =>
+        activeStep === 0 ? (
+            <AddressForm
+                checkoutToken={checkoutToken}
+                nextStep={nextStep}
+                setShippingData={setShippingData}
+                test={test}
+            />
+        ) : (
+            <PaymentForm
+                checkoutToken={checkoutToken}
+                nextStep={nextStep}
+                backStep={backStep}
+                shippingData={shippingData}
+                onCaptureCheckout={onCaptureCheckout}
+            />
+        );
 
     return (
         <>
-        <CssBaseline />
+            <CssBaseline />
             <div className={classes.toolbar} />
             <main className={classes.layout}>
                 <Paper className={classes.paper}>
-                    <Typography variant="h4" align="center">Checkout</Typography>
-                    <Stepper activeStep={activeStep} className={classes.stepper}>
-                        {steps.map((step) => (
-                            <Step key={step}>
-                                <StepLabel>{step}</StepLabel>
+                    <Typography variant="h4" align="center">
+                        Confira
+                    </Typography>
+                    <Stepper
+                        activeStep={activeStep}
+                        className={classes.stepper}
+                    >
+                        {steps.map((label) => (
+                            <Step key={label}>
+                                <StepLabel>{label}</StepLabel>
                             </Step>
                         ))}
                     </Stepper>
-                    {activeStep === steps.length ? <Confirmation /> : checkoutToken && <Form />}
+                    {activeStep === steps.length ? (
+                        <Confirmation />
+                    ) : (
+                        checkoutToken && <Form />
+                    )}
                 </Paper>
             </main>
         </>
-    )
-}
+    );
+};
 
-export default Checkout
+export default Checkout;
