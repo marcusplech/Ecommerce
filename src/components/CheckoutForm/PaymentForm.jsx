@@ -70,6 +70,9 @@ const PaymentForm = ({
             <Typography variant="h6" gutterBottom style={{ margin: "20px 0" }}>
                 Método de Pagamento
             </Typography>
+            <span style={{ color: "red" }}>
+                Utilize o número: 4242 4242 4242 4242
+            </span>
             <Elements stripe={stripePromise}>
                 <ElementsConsumer>
                     {({ elements, stripe }) => (

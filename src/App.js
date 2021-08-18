@@ -2,17 +2,29 @@ import React, { useState, useEffect } from "react";
 import { commerce } from "./lib/commerce";
 import { Products, NavBar, Cart, Checkout } from "./components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import useStyles from "./components/CheckoutForm/Checkout/styles";
+import { CircularProgress } from "@material-ui/core";
 
 const App = () => {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState({});
     const [order, setOrder] = useState({});
     const [errorMessage, setErrorMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+
+    const classes = useStyles();
 
     const fetchProducts = async () => {
-        const { data } = await commerce.products.list();
+        setIsLoading(true);
 
-        setProducts(data);
+        try {
+            const { data } = await commerce.products.list();
+
+            setProducts(data);
+        } catch (error) {
+            console.log(error);
+        }
+        setIsLoading(false);
     };
 
     const fetchCart = async () => {
@@ -69,38 +81,45 @@ const App = () => {
         fetchCart();
     }, []);
 
-    console.log(cart);
     return (
-        <Router>
-            <div>
-                <NavBar totalItems={cart.total_items} />
-                <Switch>
-                    <Route exact path="/">
-                        <Products
-                            products={products}
-                            onAddToCart={handleAddToCart}
-                            handleUpdateCartQty
-                        />
-                    </Route>
-                    <Route exact path="/cart">
-                        <Cart
-                            cart={cart}
-                            onUpdateCartQty={handleUpdateCartQty}
-                            onRemoveFromCart={handleRemoveFromCart}
-                            onEmptyCart={handleEmptyCart}
-                        />
-                    </Route>
-                    <Route exact path="/checkout">
-                        <Checkout
-                            cart={cart}
-                            order={order}
-                            onCaptureCheckout={handleCaptureCheckout}
-                            error={errorMessage}
-                        />
-                    </Route>
-                </Switch>
-            </div>
-        </Router>
+        <>
+            {isLoading ? (
+                <div className={classes.spinner}>
+                    <CircularProgress />
+                </div>
+            ) : (
+                <Router>
+                    <div>
+                        <NavBar totalItems={cart.total_items} />
+                        <Switch>
+                            <Route exact path="/">
+                                <Products
+                                    products={products}
+                                    onAddToCart={handleAddToCart}
+                                    handleUpdateCartQty
+                                />
+                            </Route>
+                            <Route exact path="/cart">
+                                <Cart
+                                    cart={cart}
+                                    onUpdateCartQty={handleUpdateCartQty}
+                                    onRemoveFromCart={handleRemoveFromCart}
+                                    onEmptyCart={handleEmptyCart}
+                                />
+                            </Route>
+                            <Route exact path="/checkout">
+                                <Checkout
+                                    cart={cart}
+                                    order={order}
+                                    onCaptureCheckout={handleCaptureCheckout}
+                                    error={errorMessage}
+                                />
+                            </Route>
+                        </Switch>
+                    </div>
+                </Router>
+            )}
+        </>
     );
 };
 
