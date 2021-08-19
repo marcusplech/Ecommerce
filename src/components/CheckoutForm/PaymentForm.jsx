@@ -96,7 +96,7 @@ const PaymentForm = ({
                                     disabled={!stripe}
                                     color="primary"
                                 >
-                                    Pague{" "}
+                                    Pagar{" "}
                                     {
                                         checkoutToken.live.subtotal
                                             .formatted_with_symbol

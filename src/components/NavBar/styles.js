@@ -18,7 +18,6 @@ export default makeStyles((theme) => ({
         textDecoration: "none",
     },
     image: {
-        width: "40px",
         height: "40px",
         marginRight: "10px",
     },
