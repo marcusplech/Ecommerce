@@ -11,7 +11,10 @@ import {
     Button,
 } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
+import { selectors } from "../../../state/selectors/returns";
+import { listCart } from "../../../state/actions";
 
+import { useSelector, useDispatch } from "react-redux";
 import { commerce } from "../../../lib/commerce";
 import AddressForm from "../AddressForm";
 import PaymentForm from "../PaymentForm";
@@ -19,17 +22,45 @@ import useStyles from "./styles";
 
 const steps = ["Endereço de Entrega", "Detalhes de Pagamento"];
 
-const Checkout = ({ cart, onCaptureCheckout, order, error }) => {
+const Checkout = ({ error }) => {
     const [checkoutToken, setCheckoutToken] = useState(null);
     const [activeStep, setActiveStep] = useState(0);
     const [shippingData, setShippingData] = useState({});
+    const [order, setOrder] = useState({});
+    const [errorMessage, setErrorMessage] = useState("");
+
     const classes = useStyles();
     const history = useHistory();
+    const dispatch = useDispatch();
+    const cart = useSelector(selectors.getCart);
 
     const nextStep = () =>
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     const backStep = () =>
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
+
+    const refreshCart = async () => {
+        await commerce.cart.refresh();
+    };
+
+    const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
+        try {
+            const incomingOrder = await commerce.checkout.capture(
+                checkoutTokenId,
+                newOrder
+            );
+
+            setOrder(incomingOrder);
+
+            refreshCart();
+        } catch (error) {
+            setErrorMessage(error.data.error.message);
+        }
+    };
+
+    useEffect(() => {
+        dispatch(listCart());
+    }, [dispatch]);
 
     useEffect(() => {
         if (cart.id) {
@@ -116,7 +147,7 @@ const Checkout = ({ cart, onCaptureCheckout, order, error }) => {
                 nextStep={nextStep}
                 backStep={backStep}
                 shippingData={shippingData}
-                onCaptureCheckout={onCaptureCheckout}
+                onCaptureCheckout={handleCaptureCheckout}
             />
         );
 
@@ -127,7 +158,7 @@ const Checkout = ({ cart, onCaptureCheckout, order, error }) => {
             <main className={classes.layout}>
                 <Paper className={classes.paper}>
                     <Typography variant="h4" align="center">
-                        Confira
+                        Finalizando
                     </Typography>
                     <Stepper
                         activeStep={activeStep}
