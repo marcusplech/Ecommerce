@@ -1,4 +1,5 @@
 import React from "react";
+import "./NavBar.css";
 import {
     AppBar,
     Toolbar,
@@ -7,12 +8,15 @@ import {
     Typography,
 } from "@material-ui/core";
 import { ShoppingCart } from "@material-ui/icons";
+import NightsStayIcon from "@material-ui/icons/NightsStay";
+import WbSunnyIcon from "@material-ui/icons/WbSunny";
 import { Link, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import logo from "../../assets/commerce.png";
 import useStyles from "./styles";
 import { selectors } from "../../state/selectors/returns";
+import { TOOGLE_SWITCHER } from "../../state/actions/types";
 
 export const LocationDisplay = () => {
     const location = useLocation();
@@ -21,16 +25,22 @@ export const LocationDisplay = () => {
 };
 
 const NavBar = () => {
-    // const location = useLocation();
     const classes = useStyles();
     const totalItems = useSelector(selectors.getCartTotalItems);
+    const dispatch = useDispatch();
+    const theme = useSelector(selectors.getTheme);
 
     return (
         <>
-            <AppBar position="fixed" className={classes.appBar} color="inherit">
-                {/* <LocationDisplay /> */}
+            <AppBar
+                style={{ backgroundColor: theme.nav }}
+                position="fixed"
+                className={classes.appBar}
+                color="inherit"
+            >
                 <Toolbar>
                     <Typography
+                        style={{ color: theme.text }}
                         role="icon-logo"
                         component={Link}
                         to="/"
@@ -47,6 +57,29 @@ const NavBar = () => {
                         E-commerce
                     </Typography>
                     <div className={classes.grow} />
+                    <div>
+                        <input
+                            className="input-mode"
+                            checked={theme.isDarkMode}
+                            onChange={() => dispatch({ type: TOOGLE_SWITCHER })}
+                            type="checkbox"
+                            id="switch"
+                            name="theme"
+                        />
+
+                        <label
+                            className="label-mode"
+                            htmlFor="switch"
+                            style={{ marginRight: "10px" }}
+                        >
+                            Toggle
+                        </label>
+                    </div>
+                    {theme.isDarkMode === true ? (
+                        <NightsStayIcon style={{ color: theme.icon }} />
+                    ) : (
+                        <WbSunnyIcon style={{ color: theme.icon }} />
+                    )}
                     <div className={classes.button}>
                         <IconButton
                             role="button"
@@ -55,7 +88,11 @@ const NavBar = () => {
                             arial-label="Show cart items"
                             color="inherit"
                         >
-                            <Badge badgeContent={totalItems} color="secondary">
+                            <Badge
+                                badgeContent={totalItems}
+                                style={{ color: theme.icon }}
+                                color="secondary"
+                            >
                                 <ShoppingCart />
                             </Badge>
                         </IconButton>

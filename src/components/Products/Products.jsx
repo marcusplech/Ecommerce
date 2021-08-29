@@ -9,9 +9,13 @@ import useStyles from "./styles";
 const Products = () => {
     const classes = useStyles();
     const stateProducts = useSelector(selectors.getProducts);
+    const theme = useSelector(selectors.getTheme);
 
     return (
-        <main className={classes.content}>
+        <main
+            style={{ backgroundColor: theme.background }}
+            className={classes.content}
+        >
             <div className={classes.toolbar} />
             <Grid container justifyContent="center" spacing={4}>
                 {stateProducts.map((product) => (

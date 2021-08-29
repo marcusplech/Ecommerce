@@ -4,7 +4,9 @@ import {
     PRODUCT_LIST_FAIL,
     PRODUCT_LIST_LOADING,
     LIST_CART,
+    TOOGLE_SWITCHER,
 } from "../actions/types";
+import { LIGHT_MODE, DARK_MODE } from "../../themes/styles";
 
 export const productListReducers = (
     state = { products: [], loading: false, error: null },
@@ -35,6 +37,20 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
                 ...state,
                 cartItems: action.payload,
             };
+        default:
+            return state;
+    }
+};
+
+export const themeReducer = (
+    state = { isDarkMode: false, ...LIGHT_MODE },
+    action
+) => {
+    switch (action.type) {
+        case TOOGLE_SWITCHER:
+            const isDarkMode = !state.isDarkMode;
+            const colorObject = isDarkMode ? DARK_MODE : LIGHT_MODE;
+            return { ...state, isDarkMode, ...colorObject };
         default:
             return state;
     }

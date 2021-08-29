@@ -1,5 +1,11 @@
-import React, { useEffect } from "react";
-import { Container, Typography, Button, Grid } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
+import {
+    Container,
+    Typography,
+    Button,
+    Grid,
+    CircularProgress,
+} from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { commerce } from "../../lib/commerce";
@@ -10,27 +16,47 @@ import { selectors } from "../../state/selectors/returns";
 import { listCart } from "../../state/actions/index";
 
 const Cart = () => {
+    const [loading, setLoading] = useState(false);
+    const [loadingEmpty, setLoadingEmpty] = useState(false);
+
     const classes = useStyles();
     const dispatch = useDispatch();
     const cart = useSelector(selectors.getCart);
+    const theme = useSelector(selectors.getTheme);
 
     const handleUpdateCartQty = async (productId, quantity) => {
-        await commerce.cart.update(productId, { quantity });
-        dispatch(listCart(productId, 1));
+        try {
+            await commerce.cart.update(productId, { quantity });
+            dispatch(listCart(productId, 1));
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const handleRemoveFromCart = async (productId) => {
-        await commerce.cart.remove(productId);
-        dispatch(listCart(productId));
+        setLoading(true);
+        try {
+            await commerce.cart.remove(productId);
+            dispatch(listCart(productId));
+        } catch (error) {
+            console.log(error);
+        }
+        setLoading(false);
     };
 
     const handleEmptyCart = async () => {
-        await commerce.cart.empty();
-        dispatch(listCart());
+        setLoadingEmpty(true);
+        try {
+            await commerce.cart.empty();
+            dispatch(listCart());
+        } catch (error) {
+            console.log(error);
+        }
+        setLoadingEmpty(false);
     };
 
     const renderEmptyCart = () => (
-        <Typography variant="subtitle1">
+        <Typography style={{ color: theme.text }} variant="subtitle1">
             Seu carrinho de compras está vazio,
             <Link className={classes.link} to="/">
                 {" "}
@@ -53,6 +79,7 @@ const Cart = () => {
                     <Grid item xs={12} sm={4} key={lineItem.id}>
                         <CartItem
                             item={lineItem}
+                            loading={loading}
                             onUpdateCartQty={handleUpdateCartQty}
                             onRemoveFromCart={handleRemoveFromCart}
                         />
@@ -60,40 +87,59 @@ const Cart = () => {
                 ))}
             </Grid>
             <div className={classes.cardDetails}>
-                <Typography variant="h4">
+                <Typography
+                    variant="h4"
+                    style={{ fontSize: "25px", color: theme.text }}
+                >
                     Subtotal: {cart.subtotal.formatted_with_symbol}
                 </Typography>
-                <div>
-                    <Button
-                        className={classes.emptyButton}
-                        size="large"
-                        type="button"
-                        variant="contained"
-                        color="secondary"
-                        onClick={handleEmptyCart}
-                    >
-                        Esvaziar Carrinho
-                    </Button>
-                    <Button
-                        className={classes.checkoutButton}
-                        component={Link}
-                        to="/checkout"
-                        size="large"
-                        type="button"
-                        variant="contained"
-                        color="primary"
-                    >
-                        Fechar Pedido
-                    </Button>
-                </div>
+                {loadingEmpty ? (
+                    <div className={classes.spinner}>
+                        <CircularProgress />
+                    </div>
+                ) : (
+                    <div style={{ marginLeft: "20px" }}>
+                        <Button
+                            className={classes.emptyButton}
+                            size="large"
+                            type="button"
+                            variant="contained"
+                            color="secondary"
+                            onClick={handleEmptyCart}
+                        >
+                            Esvaziar Carrinho
+                        </Button>
+                        <Button
+                            className={classes.checkoutButton}
+                            component={Link}
+                            to="/checkout"
+                            size="large"
+                            type="button"
+                            variant="contained"
+                            color="primary"
+                        >
+                            Fechar Pedido
+                        </Button>
+                    </div>
+                )}
             </div>
         </>
     );
 
     return (
-        <Container>
+        <Container
+            style={{
+                backgroundColor: theme.background,
+                maxWidth: "none",
+            }}
+        >
             <div className={classes.toolbar} />
-            <Typography className={classes.title} variant="h3" gutterBottom>
+            <Typography
+                style={{ color: theme.text }}
+                className={classes.title}
+                variant="h3"
+                gutterBottom
+            >
                 Carrinho de Compras
             </Typography>
             {!cart.line_items.length ? renderEmptyCart() : renderCart()}

@@ -67,7 +67,7 @@ const AddressForm = ({ checkoutToken, test }) => {
 
     useEffect(() => {
         fetchShippingCountries(checkoutToken.id);
-    }, []);
+    }, [checkoutToken]);
 
     useEffect(() => {
         if (shippingCountry) fetchSubdivisions(shippingCountry);
@@ -221,6 +221,7 @@ const AddressForm = ({ checkoutToken, test }) => {
                                     Voltar para o Carrinho
                                 </Button>
                                 <Button
+                                    style={{ marginLeft: "10px" }}
                                     type="submit"
                                     variant="contained"
                                     color="primary"

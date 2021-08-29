@@ -1,0 +1,50 @@
+/* Botão do light/dark mode */
+.input-mode[type="checkbox"] {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+}
+
+.label-mode {
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 40px;
+    height: 20px;
+    background: grey;
+    float: right;
+    border-radius: 100px;
+    position: relative;
+}
+
+.label-mode:after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 15px;
+    height: 15px;
+    background: #fff;
+    border-radius: 90px;
+    transition: 0.3s;
+}
+
+.input-mode:checked + .label-mode {
+    background: #0077ff;
+}
+
+.input-mode:checked + .label-mode:after {
+    left: calc(100% - 5px);
+    transform: translateX(-100%);
+}
+
+.label-mode:active:after {
+    width: 45px;
+}
+
+html.transition,
+html.transition *,
+html.transition *:before,
+html.transition *:after {
+    transition: all 750ms !important;
+    transition-delay: 0 !important;
+}

@@ -27,7 +27,7 @@ const Checkout = ({ error }) => {
     const [activeStep, setActiveStep] = useState(0);
     const [shippingData, setShippingData] = useState({});
     const [order, setOrder] = useState({});
-    const [errorMessage, setErrorMessage] = useState("");
+    const [setErrorMessage] = useState("");
 
     const classes = useStyles();
     const history = useHistory();
@@ -155,8 +155,11 @@ const Checkout = ({ error }) => {
         <>
             <CssBaseline />
             <div className={classes.toolbar} />
-            <main className={classes.layout}>
-                <Paper className={classes.paper}>
+            <main style={{ marginTop: "1%" }} className={classes.layout}>
+                <Paper
+                    style={{ marginTop: "0px", marginBottom: "0px" }}
+                    className={classes.paper}
+                >
                     <Typography variant="h4" align="center">
                         Finalizando
                     </Typography>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { commerce } from "../../../lib/commerce";
 import {
     Card,
@@ -7,12 +7,14 @@ import {
     CardActions,
     Typography,
     IconButton,
+    CircularProgress,
 } from "@material-ui/core";
 import { AddShoppingCart } from "@material-ui/icons";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import useStyles from "./styles";
 import { listCart } from "../../../state/actions";
+import { selectors } from "../../../state/selectors/returns";
 
 const Product = ({ product }) => {
     const classes = useStyles();
@@ -20,40 +22,75 @@ const Product = ({ product }) => {
     const title = product.name;
     const price = product.price.formatted_with_symbol;
     const description = product.description;
+    const [loading, setLoading] = useState(false);
 
     const dispatch = useDispatch();
 
+    const theme = useSelector(selectors.getTheme);
+
     const handleAddToCart = async (productId, quantity) => {
-        await commerce.cart.add(productId, quantity);
-        dispatch(listCart(productId));
+        setLoading(true);
+        try {
+            await commerce.cart.add(productId, quantity);
+            dispatch(listCart(productId));
+        } catch (error) {
+            console.log(error);
+        }
+        setLoading(false);
     };
 
     return (
-        <Card className={classes.root}>
-            <CardMedia className={classes.media} image={image} title={title} />
-            <CardContent>
-                <div className={classes.cardContent}>
-                    <Typography variant="h5" gutterBottom>
-                        {title}
-                    </Typography>
-                    <Typography variant="h5">{price}</Typography>
-                </div>
-                <Typography
-                    dangerouslySetInnerHTML={{ __html: description }}
-                    variant="body2"
-                    color="textSecondary"
-                    style={{ fontWeight: "600" }}
-                />
-            </CardContent>
-            <CardActions disableSpacing className={classes.cardActions}>
-                <IconButton
-                    aria-label="Add to Cart"
-                    onClick={() => handleAddToCart(product.id, 1)}
+        <>
+            <div>
+                <Card
+                    style={{ backgroundColor: theme.nav }}
+                    className={classes.root}
                 >
-                    <AddShoppingCart />
-                </IconButton>
-            </CardActions>
-        </Card>
+                    <CardMedia
+                        className={classes.media}
+                        image={image}
+                        title={title}
+                    />
+                    <CardContent>
+                        <div
+                            style={{ color: theme.text }}
+                            className={classes.cardContent}
+                        >
+                            <Typography variant="h5" gutterBottom>
+                                {title}
+                            </Typography>
+                            <Typography variant="h5">{price}</Typography>
+                        </div>
+                        <Typography
+                            dangerouslySetInnerHTML={{
+                                __html: description,
+                            }}
+                            variant="body2"
+                            color="textSecondary"
+                            style={{
+                                fontWeight: "600",
+                                color: theme.text,
+                            }}
+                        />
+                    </CardContent>
+                    <CardActions disableSpacing className={classes.cardActions}>
+                        {loading ? (
+                            <div className={classes.spinner}>
+                                <CircularProgress />
+                            </div>
+                        ) : (
+                            <IconButton
+                                style={{ color: theme.icon }}
+                                aria-label="Add to Cart"
+                                onClick={() => handleAddToCart(product.id, 1)}
+                            >
+                                <AddShoppingCart />
+                            </IconButton>
+                        )}
+                    </CardActions>
+                </Card>
+            </div>
+        </>
     );
 };
 

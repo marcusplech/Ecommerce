@@ -5,6 +5,7 @@ import {
     PRODUCT_LIST_FAIL,
     PRODUCT_LIST_LOADING,
     LIST_CART,
+    TOOGLE_SWITCHER,
 } from "./types";
 
 export const listProducts = () => async (dispatch) => {
@@ -35,4 +36,8 @@ export const listCart = () => async (dispatch) => {
     } catch (error) {
         console.log(error);
     }
+};
+
+export const toggleDarkMode = () => (dispatch) => {
+    dispatch({ type: TOOGLE_SWITCHER });
 };
