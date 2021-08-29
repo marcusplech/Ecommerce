@@ -7,7 +7,7 @@ const colors = {
     black1: "#222",
     purple: "#BB86FC",
     descWhite: "#757575",
-    descDark: "#313131",
+    descDark: "#313132",
 };
 
 export const LIGHT_MODE = {
