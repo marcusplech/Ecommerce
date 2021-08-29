@@ -121,6 +121,7 @@ const AddressForm = ({ checkoutToken, test }) => {
                                     label="Endereço"
                                 />
                                 <FormInput
+                                    type="email"
                                     required
                                     name="email"
                                     label="Email"
