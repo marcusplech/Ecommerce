@@ -47,6 +47,7 @@ const Product = ({ product }) => {
                     className={classes.root}
                 >
                     <CardMedia
+                        style={{ backgroundColor: theme.primary }}
                         className={classes.media}
                         image={image}
                         title={title}

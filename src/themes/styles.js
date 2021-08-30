@@ -14,7 +14,7 @@ export const LIGHT_MODE = {
     background: colors.whiteLight,
     nav: colors.whiteLight,
     primary: colors.whiteLight,
-    secondary: colors.gray,
+    secondary: colors.whiteLight,
     text: "inherit",
     icon: colors.black,
     description: colors.descWhite,
@@ -23,7 +23,7 @@ export const LIGHT_MODE = {
 export const DARK_MODE = {
     background: colors.black,
     nav: colors.gray,
-    primary: colors.charcoal,
+    primary: colors.purple,
     secondary: colors.policeBlue,
     text: colors.white,
     icon: colors.purple,

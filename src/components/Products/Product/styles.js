@@ -5,6 +5,7 @@ export default makeStyles(() => ({
         maxWidth: "100%",
     },
     media: {
+        backgroundSize: "contain",
         height: 0,
         paddingTop: "56.25%", // 16:9
     },

@@ -18,9 +18,10 @@ const CartItem = ({ item, onUpdateCartQty, onRemoveFromCart, loading }) => {
     return (
         <Card style={{ backgroundColor: theme.nav }}>
             <CardMedia
-                image={item.media.source}
+                image={item.media?.source}
                 alt={item.name}
                 className={classes.media}
+                style={{ backgroundColor: theme.primary }}
             />
             <CardContent
                 className={classes.cardContent}
