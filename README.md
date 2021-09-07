@@ -1,6 +1,6 @@
 ## Sobre esse app
 
-Esse é um projeto pessoal feito com React e Redux, projeto para mostrar as habilidades mais recentes do React.
+Esse é um projeto pessoal de Ecommerce com design moderno feito com React e Redux para mostrar as habilidades mais recentes do React.
 
 ## Live demo at https://meuecommerce.netlify.app/
 
