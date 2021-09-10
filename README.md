@@ -4,9 +4,9 @@ Esse é um projeto pessoal de Ecommerce com design moderno feito com React e Red
 
 ## Live demo at https://meuecommerce.netlify.app/
 
-Home Page            |  Home Page Dark Mode
+Home Page Light Mode          |  Home Page Dark Mode
 :-------------------------:|:-------------------------:
-![](https://i.ibb.co/RH7Q4wm/ecommerce-home.jpg)  |  ![](https://i.ibb.co/st4cc7X/ecommerce-dark.jpg)
+![](https://i.ibb.co/6sSB4HD/ecommerce-home.jpg)  |  ![](https://i.ibb.co/st4cc7X/ecommerce-dark.jpg)
 
 Cart Page        |  Checkout Page
 :-------------------------:|:-------------------------:
