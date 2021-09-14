@@ -1,8 +1,8 @@
 ## Sobre esse app
 
-Esse é um projeto pessoal de Ecommerce com design moderno feito com React e Redux para mostrar as habilidades mais recentes do React.
+Esse é um projeto pessoal de Ecommerce com design moderno feito com React, Redux, ecommercejs API e Stripe para o pagamento de cartão de crédito. A ideia é mostrar as habilidades mais recentes e poderosas do React.
 
-## Live demo at https://meuecommerce.netlify.app/
+## Link https://meuecommerce.netlify.app/
 
 Home Page Light Mode          |  Home Page Dark Mode
 :-------------------------:|:-------------------------:
@@ -18,3 +18,7 @@ Basta digitar no console:
 
 ### `npm i`
 ### `npm start`
+
+## Comentarios
+
+#### Esse projeto possui muitos recursos modernos, como o sistema de hooks, muito conteudo gerenciado com Redux e um sistema de design com grid e flex. Sinto que a experiência do usuário com a finalização da transação com cartão de crédito poderia ser melhor aproveitada (irei trabalhar nisso logo mais), mas se vocês colocarem um email real e finalizarem a compra irão receber um email de confirmação de compra (fake, claro). Divirtam-se
