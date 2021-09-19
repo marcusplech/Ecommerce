@@ -29,7 +29,6 @@ const NavBar = () => {
     const totalItems = useSelector(selectors.getCartTotalItems);
     const dispatch = useDispatch();
     const theme = useSelector(selectors.getTheme);
-    const loading = useSelector(selectors.getLoading);
     return (
         <>
             <AppBar

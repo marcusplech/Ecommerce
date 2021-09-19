@@ -118,7 +118,7 @@ const Cart = () => {
                             variant="contained"
                             color="primary"
                         >
-                            Fechar Pedido
+                            Finalizar Compra
                         </Button>
                     </div>
                 )}

@@ -79,6 +79,7 @@ const Checkout = ({ error }) => {
 
             generateToken();
         }
+        // eslint-disable-next-line
     }, [cart]);
 
     const test = (data) => {
