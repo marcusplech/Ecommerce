@@ -14,7 +14,7 @@ Cart Page        |  Checkout Page
 
 ## Como executar o projeto
 
-Basta digitar no console:
+Basta digitar no terminal:
 
 ### `npm i`
 ### `npm start`
