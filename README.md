@@ -1,70 +1,24 @@
-# Getting Started with Create React App
+## Sobre esse app
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Esse é um projeto pessoal de Ecommerce com design moderno feito com React, Redux, ecommercejs API e Stripe para o pagamento de cartão de crédito. A ideia é mostrar as habilidades mais recentes e poderosas do React.
 
-## Available Scripts
+## Link https://meuecommerce.netlify.app/
 
-In the project directory, you can run:
+Home Page Light Mode          |  Home Page Dark Mode
+:-------------------------:|:-------------------------:
+![](https://i.ibb.co/6sSB4HD/ecommerce-home.jpg)  |  ![](https://i.ibb.co/st4cc7X/ecommerce-dark.jpg)
 
+Cart Page        |  Checkout Page
+:-------------------------:|:-------------------------:
+![](https://i.ibb.co/1vZp1W9/ecommerce-cart.jpg)  |  ![](https://i.ibb.co/ZmLbD9y/ecommerce-checkout.jpg)
+
+## Como executar o projeto
+
+Basta digitar no terminal:
+
+### `npm i`
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Comentarios
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+#### Esse projeto possui muitos recursos modernos, como o sistema de hooks, muito conteudo gerenciado com Redux e um sistema de design com grid e flex. Sinto que a experiência do usuário com a finalização da transação com cartão de crédito poderia ser melhor aproveitada (irei trabalhar nisso logo mais), mas se vocês colocarem um email real e finalizarem a compra irão receber um email de confirmação de compra (fake, claro). Divirtam-se
