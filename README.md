@@ -2,6 +2,8 @@
 
 Loja de exemplo construída com **Next.js** (App Router), focada em UI moderna, tema claro/escuro e fluxo de carrinho/checkout **sem backend** — catálogo fictício e carrinho persistido no navegador.
 
+**Site em produção:** [https://mplechecommerce.vercel.app/](https://mplechecommerce.vercel.app/)
+
 ## Tecnologias
 
 | Área                      | Escolha                                                    |
