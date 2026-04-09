@@ -7,7 +7,13 @@ import { useAddToCart } from "@/hooks/use-cart";
 import type { ProductCardDTO } from "@/hooks/use-products";
 import { InlineButtonSkeleton } from "./ui/skeleton";
 
-export function ProductCard({ product }: { product: ProductCardDTO }) {
+export function ProductCard({
+  product,
+  priority = false,
+}: {
+  product: ProductCardDTO;
+  priority?: boolean;
+}) {
   const { theme } = useAppTheme();
   const addToCart = useAddToCart();
   const [busy, setBusy] = useState(false);
@@ -48,6 +54,7 @@ export function ProductCard({ product }: { product: ProductCardDTO }) {
             src={image}
             alt={product.name}
             fill
+            priority={priority}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             className="object-cover transition duration-500 group-hover:scale-[1.03]"
           />
